@@ -84,8 +84,8 @@ Snare.prototype.trigger = function(time) {
 	this.noise.stop(time + 0.2);
 };
 
-var snare = new Snare(context);
-var now = context.currentTime;
+// var snare = new Snare(context);
+// var now = context.currentTime;
 // snare.trigger(now);
 // snare.trigger(now + 0.5);
 // snare.trigger(now + 1);

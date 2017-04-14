@@ -1,4 +1,4 @@
-
+var dogBarkingBuffer = null;
 
 Array.prototype.condense = function(array2) {
   return this.map(function(num, i){
@@ -61,7 +61,7 @@ Promise.all([
   var hiHatBuff = [bufferArray[3], bufferArray[4]];
   var crashBuff = [bufferArray[5], bufferArray[6]];
   var rideBuff = [bufferArray[7], bufferArray[8]];
-  var tomBuff = [bufferArray[9], bufferArray[10], bufferArray[11], bufferArray[12], bufferArray[13]];
+  var tomsBuff = [bufferArray[9], bufferArray[10], bufferArray[11], bufferArray[12], bufferArray[13]];
 
 
   var kick = new Percussion(context, kickBuff[0])
@@ -69,76 +69,76 @@ Promise.all([
   var hiHat = new HiHat(context, hiHatBuff[0], hiHatBuff[1])
   var crash1 = new Cymbal(context, crashBuff[1])
   var crash2 = new Cymbal(context, crashBuff[0])
-  var tom1 = new Percussion(context, tomBuff[0])
-  var tom2 = new Percussion(context, tomBuff[1])
-  var tom3 = new Percussion(context, tomBuff[2])
-  var tom4 = new Percussion(context, tomBuff[3])
-  var tom5 = new Percussion(context, tomBuff[4])
-  var toms = [tom1, tom2, tom3, tom4, tom5];
   // beat(kick, snare, hiHat, crash1, crash2, 64)
 
   // bassFromHiHat(binaryArray, optimizeLocation=true, alwaysOnBeat=true, alwaysOffBeat=false;)
 
-  var hiHatStandards = [
-    [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-    [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
-    [1,0,1,0,1,0,1,0,1,0,1,0,1,1,1,0],
-    [1,0,1,1,1,0,1,0,1,0,1,0,1,1,1,0],
-    [1,0,1,1,1,0,1,0,1,0,1,1,1,1,1,0],
-    [1,0,1,0,1,0,1,0,1,0,1,1,1,0,0,0],
-    [1,0,1,0,1,0,1,0,1,1,1,0,1,0,0,0],
-    [1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0],
-    [1,0,0,0,1,0,0,0,1,0,0,0,1,0,1,0],
-    [1,0,0,0,1,0,0,0,1,0,0,1,0,0,1,0],
-  ]
-
-  var kickStandards = [
-    [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0],
-    [1,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0],
-    [1,0,0,0,0,0,1,0,1,0,0,0,0,0,1,0],
-    [1,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0],
-    [1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0],
-    [1,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0],
-    [1,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0],
-    [1,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0],
-    [1,0,0,0,1,0,0,0,0,0,0,1,0,0,1,0],
-    [1,0,0,0,1,0,0,0,0,0,0,1,0,0,1,0]
-  ]
-
-  var snareStandards = [
-    [0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
-    [0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0],
-    [0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0],
-    [0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0],
-    [0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0],
-    [0,0,1,0,0,0,1,0,0,0,0,0,1,0,1,0],
-    [0,0,1,0,0,0,0,0,0,0,1,0,1,0,0,0],
-    [0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0],
-    [0,0,0,1,0,0,1,0,0,0,0,1,0,0,1,0],
-    [0,0,0,1,0,0,1,0,0,0,0,1,1,0,0,0],
-    [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
-    [0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0]
-  ]
+  // var hiHatStandards = [
+  //   [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+  //   [1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0],
+  //   [1,0,1,0,1,0,1,0,1,0,1,0,1,1,1,0],
+  //   [1,0,1,1,1,0,1,0,1,0,1,0,1,1,1,0],
+  //   [1,0,1,1,1,0,1,0,1,0,1,1,1,1,1,0],
+  //   [1,0,1,0,1,0,1,0,1,0,1,1,1,0,0,0],
+  //   [1,0,1,0,1,0,1,0,1,1,1,0,1,0,0,0],
+  //   [1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0],
+  //   [1,0,0,0,1,0,0,0,1,0,0,0,1,0,1,0],
+  //   [1,0,0,0,1,0,0,0,1,0,0,1,0,0,1,0],
+  // ]
+  //
+  // var kickStandards = [
+  //   [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0],
+  //   [1,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0],
+  //   [1,0,0,0,0,0,1,0,1,0,0,0,0,0,1,0],
+  //   [1,0,0,0,1,0,0,0,1,0,0,0,0,0,1,0],
+  //   [1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0],
+  //   [1,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0],
+  //   [1,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0],
+  //   [1,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0],
+  //   [1,0,0,0,1,0,0,0,0,0,0,1,0,0,1,0],
+  //   [1,0,0,0,1,0,0,0,0,0,0,1,0,0,1,0]
+  // ]
+  //
+  // var snareStandards = [
+  //   [0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0],
+  //   [0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
+  //   [0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0],
+  //   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
+  //   [0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0],
+  //   [0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0],
+  //   [0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0],
+  //   [0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0],
+  //   [0,0,1,0,0,0,1,0,0,0,0,0,1,0,1,0],
+  //   [0,0,1,0,0,0,0,0,0,0,1,0,1,0,0,0],
+  //   [0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0],
+  //   [0,0,0,1,0,0,1,0,0,0,0,1,0,0,1,0],
+  //   [0,0,0,1,0,0,1,0,0,0,0,1,1,0,0,0],
+  //   [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0],
+  //   [0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0]
+  // ]
   var hiHatTest = [1,0,1,0,1,0,1,0,1,1,1,0,1,0,1,1];
-  // var hiHatOpenings = [0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0]
-
-
   var kickArr = [1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0];
   var snareArr = [0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0]
-  var hiHatArray = hiHatArrayGen()
-  // var hiHatArray = hiHatStandards[Math.floor(Math.random()*hiHatStandards.length)]
-  var hiHatOpenings = genOpeningsFromArray(hiHatArray)
-  console.log(`hiHatOpenings: ${hiHatOpenings}`)
+  var hiHatArray = hiHatStandards[Math.floor(Math.random()*hiHatStandards.length)]
   var bassArray = kickStandards[Math.floor(Math.random()*kickStandards.length)]
   var snareArray = snareStandards[Math.floor(Math.random()*snareStandards.length)]
 
   var hiHatArray2 = hiHatStandards[Math.floor(Math.random()*hiHatStandards.length)]
   var bassArray2 = kickStandards[Math.floor(Math.random()*kickStandards.length)]
   var snareArray2 = snareStandards[Math.floor(Math.random()*snareStandards.length)]
+  // var bassArray = bassFromHiHat(hiHatArray, true, true, false)
+  // console.log(bassArray)
+  // //
+  // // var snareArray = hiHatArrayGen(2)
 
+  // var hiHatArray = hiHatArrayGen(1)
+  // var bassArray = hiHatArrayGen(1.3)
+  // var snareArray = bassFromHiHat(bassArray.condense(hiHatArray), false, true, false)
+
+  // var bassArray = bassFromHiHat(hiHatArray, true, true, false)
+  // console.log(bassArray)
+  // //
+  // // var snareArray = hiHatArrayGen(2)
 
   console.log(hiHatArray)
   console.log(bassArray)
@@ -149,207 +149,40 @@ Promise.all([
 
   var quarter = [0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0]
 
-  var beatSwitch = true;
-  for (var i=0; i<16; i++) {
-    if (i%4 === 0 && i !== 0) {
-      if (beatSwitch) {
-        crash1.trigger(i*4*0.5)
-      } else {
-        crash2.trigger(i*4*0.5)
-      }
-      // crash2.trigger((i*4*0.5)-0.25)
-      beatSwitch = !beatSwitch;
-    }
-    if (beatSwitch) {
-      if ((i+1)%4 === 0) {
-        hiHatRead(dramaticPausify(hiHatArray, 8), hiHatOpenings, hiHat, i)
-        percussionRead(dramaticPausify(kickArr, 8), kick, i)
-        percussionRead(dramaticPausify(snareArr, 8), snare, i)
-        var tomFill = generateTomFill(8)
-        console.log(tomFill)
-        tomFillRead(tomFill, toms, i)
-      } else {
-        hiHatRead(hiHatArray, hiHatOpenings, hiHat, i)
-        percussionRead(kickArr, kick, i)
-        percussionRead(snareArr, snare, i)
-      }
-
-    } else {
-      if ((i+1)%4 === 0) {
-        hiHatRead(dramaticPausify(hiHatArray2, 8), hiHatOpenings, hiHat, i)
-        percussionRead(dramaticPausify(bassArray, 8), kick, i)
-        percussionRead(dramaticPausify(snareArray, 8), snare, i)
-        var tomFill = generateTomFill(8)
-        console.log(tomFill)
-        tomFillRead(tomFill, toms, i)
-      } else {
-        hiHatRead(hiHatArray2, hiHatOpenings, hiHat, i)
-        percussionRead(bassArray, kick, i)
-        percussionRead(snareArray, snare, i)
-      }
-
-    }
+  for (var i=0; i<4; i++){
+    percussionRead(kickArr, kick, i)
+    // percussionRead(hiHatArray, hiHat, i)
+    // // if (i >= 3) {
+      percussionRead(snareArr, snare, i)
+    // // }
+    // (beatArray, instrument, bar=0, beatLength=0.5, hiHatOpen=false)
+    percussionRead(hiHatTest, hiHat, i, 0.5, true)
+  }
+  for (var i=4; i<8; i++){
+    percussionRead(bassArray, kick, i)
+    percussionRead(hiHatArray2, hiHat, i, 0.5, true)
+    // if (i >= 3) {
+      percussionRead(snareArray, snare, i)
+    // // }=
+  }
+  for (var i=8; i<12; i++){
+    percussionRead(kickArr, kick, i)
+    // percussionRead(hiHatArray, hiHat, i)
+    // // if (i >= 3) {
+      percussionRead(snareArr, snare, i)
+    // // }
+    // (beatArray, instrument, bar=0, beatLength=0.5, hiHatOpen=false)
+    percussionRead(hiHatTest, hiHat, i, 0.5, true)
+  }
+  for (var i=12; i<16; i++){
+    percussionRead(bassArray, kick, i)
+    percussionRead(hiHatArray2, hiHat, i, 0.5, true)
+    // if (i >= 3) {
+      percussionRead(snareArray, snare, i)
+    // // }=
   }
 
-  function generateTomFill(numOfTeenths) {
-    var tomArray = [];
-    var cap;
-    var downward = Math.random() < 0.7;
-    console.log(`downward: ${downward}`)
-    if (downward) {
-      cap = 4;
-    } else {
-      cap = 0;
-    }
-    var tomLast = 0;
-    var streak = 0;
-    var hitStreak = 0;
-    for (var i=0; i<16; i++) {
-      if (i <= (16 - numOfTeenths) || i===15) {
-        tomArray.push(0);
-      } else {
-        var silence = Math.random() < 0.3;
-        var tomNum;
-        if (silence) {
-          tomNum = 0;
-        } else {
-          if (downward) {
-            tomNum = Math.floor(Math.random()*(cap+1));
-          } else {
-            tomNum = Math.floor(Math.random()*(4-cap))+cap;
-          }
-          tomNum += 1;
-        }
-
-        console.log(`tomLast: ${tomLast}, tomNum: ${tomNum}, streak: ${streak}`)
-        if (tomLast === tomNum) {
-          streak += 1;
-        } else {
-          streak = 0;
-        }
-        console.log(`streak: ${streak}`)
-
-        if (streak > 3) {
-          console.log("this was a streak")
-          tomNum += 2;
-          tomNum %= 5;
-        }
-
-        if (tomNum !== 0) {
-          hitStreak += 1;
-          if (hitStreak >= 4) {
-            tomNum = 0;
-            hitStreak = 0;
-          } else {
-            cap = tomNum-1;
-          }
-        }
-
-        tomLast = tomNum;
-
-        // console.log(`tomNum: ${tomNum}, cap: ${cap}`)
-
-        tomArray.push(tomNum);
-      }
-    }
-    return tomArray
-  }
-
-  function tomFillRead(fillArray, tomsArray, bar=0, beatLength=0.5) {
-    var teenth = beatLength/4
-    var barDuration = beatLength * 4
-    var temporalLocation = barDuration * bar
-
-    fillArray.forEach(function(tomNum, i) {
-      if (tomNum !== 0) {
-        tomsArray[tomNum-1].trigger(i*teenth + temporalLocation)
-      }
-    })
-  }
-
-  function genOpeningsFromArray(hiHatArray) {
-    var openingArr = hiHatArray.map(function(){
-      return 0;
-    })
-    var possibilities = []
-    for (var i=0; i<hiHatArray.length-1; i++) {
-      if (hiHatArray[i] === 1 && hiHatArray[i+1] === 0) {
-        possibilities.push(i);
-      }
-    }
-    if (!possibilities[0]) {
-      console.log("hitting here")
-      possibilities = [Math.floor(Math.random()*16)]
-    }
-    console.log(`possibilities: ${possibilities}`)
-    var openings = randomFromArray(possibilities);
-    console.log(`openings ${openings}`)
-    return openingArr.map(function(num, i){
-      var flag = false;
-      openings.forEach(function(index) {
-        if (index === i) {
-          flag = true;
-        }
-      })
-      if (flag) {
-        return 1;
-      } else {
-        return 0
-      }
-    })
-  }
-
-  function randomFromArray(arr) {
-    var numOfOpenings = Math.floor(Math.random()*(arr.length+1));
-    if (numOfOpenings > 2) {
-      numOfOpenings = 2 + Math.floor(Math.random()*2)
-    }
-    var openingLocations = []
-    for (var i=0; i<numOfOpenings; i++) {
-      var random = Math.floor(Math.random()*arr.length)
-      openingLocations.push(arr[random])
-    }
-    console.log(openingLocations, numOfOpenings)
-    if (openingLocations.length > 3) {
-      openingLocations = openingLocations.slice(0, 3)
-    }
-    return openingLocations
-  }
 })
-
-function dramaticPausify(beatArray, dramaticPauseBegin=4) {
-  return beatArray.map(function(num, i) {
-    if (i > 16-dramaticPauseBegin) {
-      return 0
-    } else {
-      return num;
-    }
-  })
-}
-
-function percussionRead(beatArray, instrument, bar=0, beatLength=0.5) {
-  var barSize = beatArray.length;
-  var teenth = beatLength/4
-  var barDuration = beatLength * 4
-  var temporalLocation = barDuration * bar
-  beatArray.forEach(function(num, i) {
-    if (num === 1) {
-      instrument.trigger(i*teenth + temporalLocation)
-    }
-  })
-}
-
-function hiHatRead(beatArray, hiHatOpenArray, hiHat, bar=0, beatLength=0.5) {
-  var teenth = beatLength/4
-  var barDuration = beatLength * 4
-  var temporalLocation = barDuration * bar
-  beatArray.forEach(function(num, i) {
-    if (num === 1) {
-      var hiHatOpen = hiHatOpenArray[i] === 1;
-      hiHat.trigger(i*teenth + temporalLocation, hiHatOpen)
-    }
-  })
-}
 
 function hiHatArrayGen(probDistort=1, speedy=false) {
   var binaryArray = [];
@@ -365,6 +198,7 @@ function hiHatArrayGen(probDistort=1, speedy=false) {
     if (speedy) {
       random += 0.5
     }
+
 
     if (random < .85*probDistort) { // sixteenthNotes
       num = 0;
@@ -478,6 +312,7 @@ function analyzeArray(binaryArray) {
   var tPure = false;
   var nPure = false;
 
+
   if (quarterCounts+halfCounts === 4) {
     qHeavy = true
     qPure = true;
@@ -500,6 +335,9 @@ function analyzeArray(binaryArray) {
   if (noteCount >= 8) {
     nHeavy = true;
   }
+
+
+
 
 
   var spatialized = false;
@@ -554,6 +392,11 @@ function analyzeArray(binaryArray) {
     disjunct
   }
 
+  // console.log(`dull? : ${dull}`)
+  // console.log(`disjunct? : ${disjunct}`)
+  // console.log(purityValidation, notesInAll, streakQualifier)
+  // console.log(!qPure, !ePure, !tPure)
+
   return analysis;
 }
 
@@ -599,6 +442,26 @@ function unoptomizedLocation(binaryArray, alwaysOnBeat, alwaysOffBeat) {
     }
   })
 }
+
+
+
+// var countTally = [halfCounts, quarterCounts, eighthCounts, teenthCounts, noteCount]
+// var countHeavy = [qHeavy, eHeavy, tHeavy, nHeavy]
+// var purity = [qPure, ePure, tPure]
+// var streaks = [
+//   [longestStreak, longestStreakBeginsAt, longestStreakEndsAt],
+//   [longestSpace, longestSpaceBeginsAt, longestSpaceEndsAt]
+// ]
+// var spacing = [spatialized, streaky, nonStreaky]
+
+// var analysis = {
+//   countTally,
+//   countHeavy,
+//   purity,
+//   streaks,
+//   spacing,
+//   disjunct
+// }
 
 function optimizedLocation(binaryArray, alwaysOnBeat, alwaysOffBeat) {
   var analysis = analyzeArray(binaryArray);
@@ -696,6 +559,35 @@ function optimizedLocation(binaryArray, alwaysOnBeat, alwaysOffBeat) {
   })
 
   return onBeat
+
+  // var offBeat
+
+  // if (alwaysOnBeat && alwaysOffBeat) {
+  //   newBeat2 =
+  // }
+
+
+}
+
+function percussionRead(beatArray, instrument, bar=0, beatLength=0.5, hiHatOpen=false) {
+  var barSize = beatArray.length;
+  var teenth = beatLength/4
+  var barDuration = beatLength * 4
+  var temporalLocation = barDuration * bar
+  beatArray.forEach(function(num, i) {
+    if (num === 1) {
+      if (hiHatOpen) {
+        if ((i+6)%8 === 0) {
+          instrument.trigger(i*teenth + temporalLocation, true)
+        } else {
+          instrument.trigger(i*teenth + temporalLocation, false)
+        }
+      } else {
+        instrument.trigger(i*teenth + temporalLocation, false)
+      }
+
+    }
+  })
 }
 
 function Percussion(context, audioBuffer) {
@@ -704,23 +596,20 @@ function Percussion(context, audioBuffer) {
 };
 
 Percussion.prototype.setup = function(velocity=1) {
-  var variantRange = Math.random()*900
-  this.variant = this.context.createBiquadFilter();
-  this.variant.type = "peaking";
-  this.variant.frequency.value = 100 + variantRange;
-  this.variant.gain.value = 2;
-
   this.source = this.context.createBufferSource();
   this.source.buffer = this.buffer;
 	this.gain = this.context.createGain();
-  this.gain.gain.value = velocity - Math.random()*0.4
-	this.source.connect(this.variant)
-  this.variant.connect(this.gain)
+  this.gain.gain.value = velocity
+
+	this.source.connect(this.gain)
 	this.gain.connect(masterOut)
 };
 
 Percussion.prototype.trigger = function(start=0) {
 	this.setup();
+  if (start !== 0) {
+    // start += (10-(Math.random()*20))/1000 // adds variability;
+  }
 	this.source.start(now + start);
 	this.source.stop(now + start + 1.0);
 };
@@ -730,22 +619,28 @@ function HiHat(context, audioBuffer, audioBufferOpen) {
 	this.context = context;
   this.openBuffer = audioBufferOpen;
   this.buffer = audioBuffer;
+  this.leftRight = 0;
   this.open = false;
 
 };
 
 HiHat.prototype.setup = function(open=false, velocity=1) {
-  var variantRange = Math.random()*4000
+  var variantRange = Math.random()*100
   this.variant = this.context.createBiquadFilter();
   this.variant.type = "peaking";
-  this.variant.frequency.value = 5000 + variantRange;
-  this.variant.gain.value = 2;
+  this.variant.frequency.value = 1000 + variantRange;
+  this.variant.gain.value = 10;
 
   if (!open) {
+    // if (this.open) {
+    //   this.gain2.gain.value = 0;
+    //   this.open = false;
+    // }
     this.source = this.context.createBufferSource();
     this.source.buffer = this.buffer;
   	this.gain = this.context.createGain();
-    this.gain.gain.value = velocity - Math.random()*0.4
+    this.gain.gain.value = velocity - Math.random()*0.4 //- (this.leftRight * 0.5);
+    this.leftRight = (this.leftRight + 1)%2;
 
   	this.source.connect(this.variant)
     this.variant.connect(this.gain)
@@ -755,7 +650,8 @@ HiHat.prototype.setup = function(open=false, velocity=1) {
     this.source2 = this.context.createBufferSource();
     this.source2.buffer = this.openBuffer;
   	this.gain2 = this.context.createGain();
-    this.gain2.gain.value = velocity - (Math.random()*0.4 * velocity)
+    this.gain2.gain.value = velocity - (Math.random()*0.4 * velocity)//- (this.leftRight * 0.5);
+    this.leftRight = (this.leftRight + 1)%2;
 
   	this.source2.connect(this.variant)
     this.variant.connect(this.gain2)
@@ -835,33 +731,17 @@ Cymbal.prototype.trigger = function(start=0, velocity=.7, earlyStop=null) {
   }
 };
 
-Cymbal.prototype.triggerTimed = function(bar=0, beatLength=0.5, velocity=.7, earlyStop=null) {
-
-  var barDuration = beatLength * 4
-  var temporalLocation = barDuration * bar
-
-  this.setup(velocity);
-	this.source.start(now + temporalLocation);
-
-  if (earlyStop) {
-    this.source.stop(now + temporalLocation + earlyStop);
-  } else {
-    this.source.stop(now + temporalLocation + + 7.0)
-  }
-};
-
-
-var muted = false;
+var muted = true
 $(document).keydown(function(event){
   if (event.which === 32) {
     if (!muted) {
-      // console.log("space pressed")
-      // compareSwitch.gain.value = 0;
-      masterOut.gain.value = 0;
+      console.log("space pressed")
+      compareSwitch.gain.value = 0;
+      // masterOut.gain.value = 0;
       muted = true;
     } else {
-      // compareSwitch.gain.value = 1;
-      masterOut.gain.value = 1;
+      compareSwitch.gain.value = 1;
+      // masterOut.gain.value = 1;
       muted = false;
     }
   }
